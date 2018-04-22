@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+<div class="container blanc" style="min-height:60em;">
+
+    <div class="row">
+        <div class="col-sm-12 text-center"><h1 class="page-header">Gestion des données</h1>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading" style="display: none">
+                    </div>
+                    <div class="panel-body SAUV maxi">
+                        <div><a class="btn" href="{{ path('parametre_index') }}">&nbsp;Tous les paramètres&nbsp;
+                                <i class="fa fa-download"></i>&nbsp;</a>
+                        </div>
+                        <hr>
+                        <table width="100%"
+                               class="table table-striped table-bordered table-hover col-lg-12">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Catégorie</th>
+                                <th>Clé</th>
+                                <th>Valeur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for parametre in parametre %}
+                                <tr>
+                                    <td > {{ parametre.id }} .
+                                        <a href="{{ path('parametre_edit', { 'id': parametre.id }) }}">
+                                            <i class="fa fa-pencil-square-o" style="font-size: x-large"></i></a>
+                                    </td>
+                                    <td>{{ parametre.categorie }}</td>
+                                    <td>{{ parametre.clelibelle }}</td>
+                                    <td>{{ parametre.valeurlibelle }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div>
+                            <a href="{{ path('parametre_new') }}">Créer un paramètre&nbsp;
+                                <i class="fa fa-cart-plus" style="font-size: x-large"></i>&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="panel panel-default ">
+                    <div class="panel-body SAUV maxi">
+                        <div>
+                            <a class="btn">&nbsp;Paramètres&nbsp;
+                                <i class="fa fa-download"></i>&nbsp;</a></div>
+                        <hr>
+                        <table width="100%"
+                               class="table table-striped table-bordered table-hover col-lg-12">
+                            <thead>
+                            <tr>
+
+                                <th>Supprimer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

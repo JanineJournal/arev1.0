@@ -1,0 +1,455 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container blanc" style="min-height: 870px">
+        <div class="col-lg-12"><h1 class="page-header"> Ajout TP / SAV sur fiche n°{{ fiche.id }} {{ fiche.statut }}
+                &nbsp;&nbsp; {% if fiche.site %} {{  fiche.site.nomSite }}{%  if fiche.site.client %}{{ fiche.site.client.nomClient }} -{% endif %}{% endif %}
+                &nbsp Code Racco : {{ fiche.codeRacco }}
+            </h1>
+        </div>
+
+        {% if is_granted('ROLE_RACCO') %}
+            <div class="row">
+
+                <div class="panel-body SAUV    ">
+                    <div class="col-xs-12 ">
+                        <h4> Création d'un TP ou SAV
+                        </h4>
+                        {{ form_start(form) }}
+                        <div style="display:none">
+
+                            {{ form_row(form._token) }}
+                        </div>
+                        <table width="100%"
+                               class="table table-bordered" style="background-color: #ffbd32;">
+                            <thead>                            </thead>
+                            <tbody style="text-align: center">
+                            <tr>
+                                <th class=" tp col-lg-8" > {{ form_label(form.commentaire) }}
+
+                                    {{ form_errors(form.commentaire) }}
+                                    {{ form_widget(form.commentaire) }}
+                                </th>
+                                <th class=" tp col-lg-2" >
+                                    <br>
+                                    {{ form_row(form.operateurtp) }}
+                                    {{ form_row(form.facturable) }}
+                                </th>
+                                <th class=" tp col-lg-2" >  <button type="submit" class="btn-lg btn">Enregistrer</button>
+                                    {{ form_end(form) }}
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="row">
+            <div style="width: 100%; margin: auto">
+                <div class="panel-body SAUV ">
+                    <div class="col-md-3">
+                        <h4> INTERVENTION </h4>
+                        <table width="100%"
+                               class="table detail table-bordered table-hover ">
+                            {% if fiche.intervention %}
+                                <tr>
+                                <th>Intervention</th>
+                                <td>{{ fiche.intervention }} </td>
+                                </tr>{% endif %}
+                            {% if fiche.operateurTP %}
+                                <tr>
+                                <th>Opérateur Racco</th>
+                                <td>{{ fiche.operateurTP }} </td>
+                                </tr>{% endif %}
+                            {% if fiche.centreTSV %}
+                                <tr>
+                                    <th>Centre TSV</th>
+                                    <td>
+                                        {% if fiche.centreTSV == 'www.ctcamgprs72.dnsalias.net' %}
+                                            Le Mans
+                                        {% endif %}
+                                        {% if fiche.centreTSV == 'www.ctcamgprs85.dnsalias.net' %}
+                                            La Roche
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if fiche.date %}
+                                <tr>
+                                <th>Date</th>
+                                <td>{{ fiche.date|date('d-m-Y  H:i:s') }}</td>
+                                </tr>{% endif %}
+                            {% if fiche.radio %}
+                                <tr>
+                                    <th>Carte SIM</th>
+                                    <td>{{ fiche.radio.numSeriesim }}</td>
+                                </tr>
+                                <tr>
+                                <th>Numero SIM</th>
+                                <td>{{ fiche.radio.numTelsim }}</td>
+                                </tr>{% endif %}
+                            {% if fiche.technicien %}
+                                <tr>
+                                <th>Technicien</th>
+                                <td>{{ fiche.technicien }}</td>
+                                </tr>{% endif %}
+                            {% if fiche.numCommande %}
+                                <tr>
+                                <th>N° Commande</th>
+                                <td>{{ fiche.numCommande }}</td>
+                                </tr>{% endif %}
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <h4> CLIENT </h4>
+                        <table width="100%"
+                               class="table table-bordered table-hover ">
+                            {% if fiche.site %}
+                            {% if fiche.site.client %}
+                                <tr>
+                                    <th>Nom du Client</th>
+                                    <td>{{ fiche.site.client.nomClient }}  </td>
+                                </tr>
+                                <tr>
+                                    <th>Code Client</th>
+                                    <td>{{ fiche.site.client.codeClient }} </td>
+                                </tr>
+                                <tr>
+                                    <th>Adresse</th>
+                                    <td>
+                                        {% if fiche.site.client.adresse01 %}{{ fiche.site.client.adresse01 }}{% endif %}
+                                        <br>
+                                        {% if fiche.site.client.codePostal %} {{ fiche.site.client.codePostal }}{% endif %}
+                                        {% if fiche.site.client.villeLocalite %}{{ fiche.site.client.villeLocalite }}
+                                            <br>{% endif %} </td>
+                                </tr>
+                                <tr>
+                                    <th> Téléphone(s) du Client</th>
+                                    <td>{% if fiche.site.client.numTel1 %}
+                                            {{ fiche.site.client.numTel1 }}<br>{% endif %}
+                                        {% if fiche.site.client.numTel2 %}
+                                            {{ fiche.site.client.numTel2 }}<br>{% endif %}
+                                        </td>
+                                </tr>
+                            {% endif %}
+                            {% endif %}
+                            {% if fiche.mdpClient %}
+                                <tr>
+                                    <th>Mot de passe Client</th>
+                                    <td>{{ fiche.mdpClient }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if fiche.radio %}
+                                <tr>
+                                    <th>Codes, Badges</th>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class=" col-md-3">
+                        <h4> CENTRALE </h4>
+                        <table width="100%"
+                               class="table table-bordered table-hover ">
+                            {% if fiche.filaire %}
+
+                                {% if fiche.filaire.adresseIP %}
+                                    <tr>
+                                        <th>Adresse IP</th>
+                                        <td>{{ fiche.filaire.adresseIP }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.GSM %}
+                                    <tr>
+                                        <th>GSM</th>
+                                        <td>{{ fiche.filaire.GSM }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.IPfixe %}
+                                    <tr>
+                                        <th>IP fixe</th>
+                                        <td>OUI</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.portSPC %}
+                                    <tr>
+                                        <th>Port SPC</th>
+                                        <td>{{ fiche.filaire.portSPC }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.portSortant %}
+                                    <tr>
+                                        <th>Port Sortant</th>
+                                        <td>{{ fiche.filaire.portSortant }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.portWeb %}
+                                    <tr>
+                                        <th>Port WEB</th>
+                                        <td>{{ fiche.filaire.portWeb }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.mdpWeb %}
+                                    <tr>
+                                        <th>Mot de passe Web</th>
+                                        <td>{{ fiche.filaire.mdpWeb }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.cleCryptage %}
+                                    <tr>
+                                        <th>Clé Cryptage</th>
+                                        <td>{{ fiche.filaire.cleCryptage }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.gestionHoraire %}
+                                    <tr>
+                                        <th>Gestion Horaire</th>
+                                        <td>{{ fiche.filaire.gestionHoraire }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.GMESappel %}
+                                    <tr>
+                                        <th>Mise en Service Téléphonique</th>
+                                        <td>{{ fiche.filaire.GMESappel }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.MESauto %}
+                                    <tr>
+                                        <th>Mise en Service Automatique</th>
+                                        <td>{{ fiche.filaire.MESauto }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if fiche.filaire.FAI %}
+                                    <tr>
+                                        <th>FAI</th>
+                                        <td>{{ fiche.filaire.FAI }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class=" col-md-3">
+                        <h4> EMPLACEMENTS </h4>
+                        <table width="100%"
+                               class="table table-bordered table-hover ">
+                            {% if peripheriques is defined %}
+                                {% for peri in peripheriques %}
+                                    {% if peri.localisation %}
+                                        <tr>
+                                            <td> {{ peri.nom }} : {{ peri.type }}   </td>
+                                            <td> {{ peri.localisation }} </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+
+                    <div class="col-xs-6 maxi ">
+                        <h4> PERIPHERIQUES</h4>
+                        <table width="100%"
+                               class="table  table-bordered table-hover ">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Type</th>
+                                <th>Réf.</th>
+                                <th>NS</th>
+                                <th>Version</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if peripheriques is defined %}
+                                {% for peri in peripheriques %}
+                                    <tr>
+                                        <td> {{ peri.nom }}   </td>
+                                        <td> {{ peri.type }}   </td>
+                                        <td> {{ peri.reference }} </td>
+                                        <td> {{ peri.numSerie }} </td>
+                                        <td> {{ peri.version }} </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel-body SAUV">
+                    <div class="col-xs-6  ">
+                        <h4> HABILITES - RESPONSABLES </h4>
+                        <table width="100%"
+                               class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Civilité</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Type</th>
+                                <th>Mot de Passe</th>
+                                <th>Num Téléphone(s)</th>
+                            </tr>
+                            </thead>
+                            {% if habilites is defined %}
+                                <tbody>
+                                {% for habilite in habilites %}
+                                    <tr>
+                                        <td> {{ habilite.civilite }}    </td>
+                                        <td> {{ habilite.nomHabili }}  </td>
+                                        <td>   {% if habilite.prenomHabili %} {{ habilite.prenomHabili }}  -   {% endif %} </td>
+                                        <td>  {{ habilite.typeHabili }} </td>
+                                        <td>  {{ habilite.mdpHabili }} </td>
+                                        <td>    {% if habilite.numTel %} {{ habilite.numTel }}  <br>  {% endif %}
+                                            {% if habilite.numTel2 %} {{ habilite.numTel2 }} <br>  {% endif %}
+                                            {% if habilite.numTel3 %} {{ habilite.numTel3 }} <br>  {% endif %}
+                                            {% if habilite.numTel4 %} {{ habilite.numTel4 }}  <br> {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class="col-xs-6  ">
+                        <h4> SECTEURS </h4>
+                        <table width="100%"
+                               class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Nom Zone ou Secteur</th>
+                                <th>Partielle</th>
+                                <th>Option Partielle</th>
+                                <th>Tempo</th>
+                                <th>Entrée</th>
+                                <th>Sortie</th>
+                            </tr>
+                            </thead>
+                            {% if secteurs is defined %}
+                                <tbody>
+                                {% for zone in secteurs %}
+                                    <tr>
+                                        <td>     {% if zone.nom %} {{ zone.nom }}        {% endif %} </td>
+                                        <td>     {% if zone.partielle %} {{ zone.partielle }}       {% endif %} </td>
+                                        <td>     {% if zone.optionsPartielle %} {{ zone.optionsPartielle }}        {% endif %} </td>
+                                        <td>     {% if zone.tempo %} {{ zone.tempo }}      {% endif %} </td>
+                                        <td>     {% if zone.entree %} {{ zone.entree }}     {% endif %} </td>
+                                        <td>     {% if zone.sortie %}{{ zone.sortie }}      {% endif %} </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            {% endif %}
+                        </table>
+                    </div>
+
+                    <div class="col-xs-6  ">
+                        <h4>APPLICATION SMARTPHONE</h4>
+                        {% if fiche.appsmartphone is defined %}
+                            <table width="100%"
+                                   class="table table-bordered table-hover">
+                                <tr>
+                                    <th>Type</th>
+                                    <td>{% if fiche.appsmartphone %}
+                                            {{ fiche.appsmartphone.typeapplication }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endif %}
+                        {% if fiche.appsmartphone.comptevideo is defined %}
+                            <table width="100%"
+                                   class="table table-bordered table-hover ">
+                                <thead>
+                                <tr>
+                                    <th>Identifiant</th>
+                                    <th>Email</th>
+                                    <th>Question</th>
+                                    <th>Reponse</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for comptevid in fiche.appsmartphone.comptevideo %}
+                                    <tr>
+                                        <td>{% if comptevid.identifiant %} {{ comptevid.identifiant }} {{ comptevid.codeCompte }}
+                                                <br>{% endif %} </td>
+                                        <td>     {% if comptevid.emailCompteVideo %}{{ comptevid.emailCompteVideo }}
+                                                <br>{% endif %} </td>
+                                        <td>    {% if comptevid.questionCompteVideo %}{{ comptevid.questionCompteVideo }}
+                                                <br>{% endif %} </td>
+                                        <td>     {% if comptevid.reponseCompteVideo %}{{ comptevid.reponseCompteVideo }}
+                                                <br>{% endif %} </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-xs-6 maxi ">
+                        <h4>COMMENTAIRE </h4>
+                        <div class="col-xs-9">
+                            {% if fiche.commentaire %}
+                                <p>
+                                    {{ fiche.commentaire }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="panel-body SAUV    ">
+                <div class="col-xs-12 maxi ">
+                    <h4>HISTORIQUE TP - SAV </h4>
+                    <table width="100%"
+                           class="table table-bordered table-hover ">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type Centrale</th>
+                            <th>Intervention</th>
+                            <th>Facturable</th>
+                            <th>Par</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if interold is defined %}
+                            {% for tpsav in interold %}
+                                <tr>
+                                    <td> {{ tpsav.dateTP|date('d-m-Y') }} </td>
+                                    <td>{{ tpsav.fiche.typeCentrale }}</td>
+                                    <td> {{ tpsav.commentaire }} </td>
+                                    <td> {% if tpsav.facturable %} {{ tpsav.facturable }} {% endif %} </td>
+                                    <th>{{ tpsav.operateurTP }}</th>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script>
+            $(document).ready(function () {
+                jQuery('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
+    {% endblock %}

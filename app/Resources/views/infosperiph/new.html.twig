@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc text-center " style="min-height: 810px">
+        <div class=" crea">
+
+            <h1>Création d'un périphérique</h1>
+            <hr>
+            {{ form_start(form) }}
+            <table class=" col-md-offset-4">
+                <tbody>
+                <tr>
+                    <th>
+                        Numéro de la série {{ form_errors(form.numSerie) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.numSerie) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ form_label(form.langue) }}
+                        {{ form_errors(form.langue) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.langue) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ form_label(form.options) }}
+                        {{ form_errors(form.options) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.options) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Libellé {{ form_errors(form.libelle) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.libelle) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Référence Nexecur {{ form_errors(form.refElixir) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.refElixir) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Préfixe {{ form_errors(form.prefixe) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.prefixe) }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Créer"/>
+            {{ form_end(form) }}
+            <hr>
+            <div>
+                <a href="{{ path('parametre_index') }}">Liste des Paramètres</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

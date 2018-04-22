@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Infosperiph</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ infosPeriph.id }}</td>
+            </tr>
+            <tr>
+                <th>Numserie</th>
+                <td>{{ infosPeriph.numSerie }}</td>
+            </tr>
+            <tr>
+                <th>Langue</th>
+                <td>{{ infosPeriph.langue }}</td>
+            </tr>
+            <tr>
+                <th>Options</th>
+                <td>{{ infosPeriph.options }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ infosPeriph.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Refelixir</th>
+                <td>{{ infosPeriph.refElixir }}</td>
+            </tr>
+            <tr>
+                <th>Prefixe</th>
+                <td>{{ infosPeriph.prefixe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('infosperiph_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('infosperiph_edit', { 'id': infosPeriph.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

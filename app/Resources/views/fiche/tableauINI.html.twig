@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc " style="min-height: 400px">
+        <div class="col-lg-12 "><h1 class="page-header">Fichier .INI pour fiche n° {{ fiche.id }} et code
+                Racco {{ fiche.codeRacco }} </h1>
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div class="panel panel-default ">
+                        <div class="panel-heading" style="display: none">
+                        </div>
+                        <div class="panel-body INI col-md-8  col-md-offset-2 table-responsive ">
+                            {{ compteur }} lignes
+                            &nbsp;&nbsp;
+                            <a class="btn btn-default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                               href="{{ path('editerFiche', { 'id': fiche.id }) }}"
+                            >Retour à la FICHE</a>
+                            <table width="100%"
+                                   class=" table-striped table-bordered table-hover col-lg-12">
+                                <thead>
+                                <tr>
+                                    <th>Clé</th>
+                                    <th>Valeur</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if lignes is defined %}
+                                    {% for a, b in lignes %}
+                                        <tr>
+                                            <td>{{ a }} </td><td> {{ b }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

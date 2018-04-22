@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc text-center " style="min-height: 60em">
+        <div class=" crea">
+            <div style="height: 60px"></div>
+                <img src="{{ asset('img/arev (19).png') }}"/>
+
+            <h1>Choix du Client</h1>
+        </div>
+        <div class="row ">
+            {% if app.user %}
+            <div class="panel panel-default ">
+                <div class="panel-heading" style="display: none">
+                </div>
+                <div class="panel-body  ">
+                    <div class="SAUV ">
+
+                        <p>{{ form_start(form) }} </p>
+                        <p style="display: none">{{ form_label(form) }}</p>
+                        <p>{{ form_errors(form) }}</p>
+                        <p>  {{ form_widget(form, { 'attr': {'class': 'choix'} }) }} </p>
+                        <p>{{ form_end(form) }}</p>
+
+                        {# if collection %}
+                            {% for clients in collection %}
+                                {% if clients %}
+                                    <ul>
+                                        {% for client in clients %}
+                                            <li>  {{ client.nom }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif #}
+
+                    </div>
+                </div>
+                {# if no client : nouvelle fiche quand meme bouton ou crea client ici?? #}
+
+                {% elseif not app.user %}
+                    <div class="panel panel-default ">
+                        <div class="panel-heading" style="display: none">
+                        </div>
+                        <div class="panel-body SAUV text-center">
+                            <div class="col-sm-6">
+                                <a class="btn-xl btn"
+                                   href="{{ path('fos_user_registration_register') }}">S'inscrire</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn-xl btn" href="{{ path('fos_user_security_login') }}">Se
+                                    Connecter</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

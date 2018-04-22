@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container blanc" style="min-height:55em;">
+        <div class="row SAUV">
+            <div class="col-sm-12 text-center  "><h1 class="page-header">Paramètres</h1>
+                <a class="btn" onclick="return confirm('Etes-vous sûr que le paramètre n\'existe pas déjà ?');" href="{{ path('parametre_new') }}" style="font-size: 16px">Créer un paramètre <br>(centrale,
+                    client, type habilité)</a>
+                <table id="datatable_parametres" width="100%"
+                       class="table table-striped table-bordered table-hover col-lg-12">
+                    <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Valeur</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for parametre in parametre %}
+                        <tr>
+                            <td>{{ parametre.categorie }}</td>
+                            <td>{{ parametre.valeurlibelle }}</td>
+                            <td>
+                                <a href="{{ path('parametre_edit', { 'id': parametre.id }) }}">Modifier ou
+                                    Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row SAUV">
+            <div class="col-sm-12 text-center  ">
+                <h1 id="peripheriques" class="page-header">Types Périphériques</h1>
+                <a class="btn" onclick="return confirm('Etes-vous sûr que le périphérique n\'existe pas déjà ?');" href="{{ path('infosperiph_new') }}" style="font-size: 16px">Créer une référence
+                    <br> Périphérique </a>
+                <table id="datatable_periphs" width="100%"
+                       class="table table-striped table-bordered table-hover col-lg-12">
+                    <thead>
+                    <tr>
+                        <th>N.S.</th>
+                        <th>Langue</th>
+                        <th>Options</th>
+                        <th>Libellé</th>
+                        <th>Ref. Nexecur</th>
+                        <th>Préfixe</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for infosPeriph in infosPeriphs %}
+                        <tr>
+                            <td>{{ infosPeriph.numSerie }}</td>
+                            <td>{{ infosPeriph.langue }}</td>
+                            <td>{{ infosPeriph.options }}</td>
+                            <td>{{ infosPeriph.libelle }}</td>
+                            <td>{{ infosPeriph.refElixir }}</td>
+                            <td>{{ infosPeriph.prefixe }}</td>
+                            <td>
+                                <a href="{{ path('infosperiph_edit', { 'id': infosPeriph.id }) }}">Modifier ou
+                                    Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#datatable_periphs').DataTable({
+                    // colReorder: true,
+                    "lengthMenu": [[25, 10, 50, -1], [25, 10, 50, "All"]],
+                    responsive: false,
+                    "scrollX": true,
+                    "language":
+                        {
+                            "sProcessing": "Traitement en cours...",
+                            "sSearch": "Rechercher&nbsp;:",
+                            "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                            "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                            "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                            "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                            "sInfoPostFix": "",
+                            "sLoadingRecords": "Chargement en cours...",
+                            "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                            "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                            "oPaginate": {
+                                "sFirst": "Premier",
+                                "sPrevious": "Pr&eacute;c&eacute;dent",
+                                "sNext": "Suivant",
+                                "sLast": "Dernier"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                            }
+                        }
+                });
+                $('#datatable_parametres').DataTable({
+                    // colReorder: true,
+                    responsive: false,
+                    "scrollX": true,
+                    "language":
+                        {
+                            "sProcessing": "Traitement en cours...",
+                            "sSearch": "Rechercher&nbsp;:",
+                            "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                            "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                            "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                            "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                            "sInfoPostFix": "",
+                            "sLoadingRecords": "Chargement en cours...",
+                            "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                            "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                            "oPaginate": {
+                                "sFirst": "Premier",
+                                "sPrevious": "Pr&eacute;c&eacute;dent",
+                                "sNext": "Suivant",
+                                "sLast": "Dernier"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                            }
+                        }
+                });
+            });
+        </script>
+    {% endblock %}
+

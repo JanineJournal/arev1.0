@@ -1,0 +1,485 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container blanc" style="min-height: 60em;">
+        <div class="col-lg-12"><h1 class="page-header"> Statistiques </h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default ">
+                    <div class="panel-heading" style="display: none">
+                    </div>
+                    <div class="panel-body SAUV ">
+                        <!-- Nav tabs -->
+                        <ul class="nav REPORT nav-tabs">
+                            <li class="active"><a href="#home" data-toggle="tab">Synthèse</a>
+                            </li>
+                            <li><a href="#encours" data-toggle="tab">Fiches Ouvertes</a>
+                            </li>
+                            <li><a href="#avalider" data-toggle="tab">A Valider</a>
+                            </li>
+                            <li><a href="#IVAL" data-toggle="tab">Installations</a>
+                            </li>
+                            <li><a href="#CVAL" data-toggle="tab">Compléments</a>
+                            </li>
+                            <li><a href="#REMVAL" data-toggle="tab">Remontages</a>
+                            </li>
+                            <li><a href="#RENVAL" data-toggle="tab">Renouvellements</a>
+                            </li>
+                            <li><a href="#SVAL" data-toggle="tab">SAV</a>
+                            </li>
+                            <li><a href="#toutes" data-toggle="tab">Total</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="home">
+                                <h4>Synthèse</h4>
+                                <div class="col-sm-6">
+
+                                    <table class="table table-bordered table-hover col-lg-12 table-responsive table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Année</th>
+                                            <th>Mois</th>
+                                            <th>Nombre de fiches</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        <tr data-toggle="collapse" data-target=".child18">
+                                            <th>2018</th>
+                                            <th>Cumul :</th>
+                                            <th>{{ cumulAn.1.nombre }}</th>
+                                        </tr>
+                                        {% for mois in interventionsMois %}
+                                            {% if mois.an == '2018' %}
+                                                <tr class="collapse child18">
+                                                    <td></td>
+                                                    <td>{{ mois.mois|replace({
+                                                            '12' : 'Décembre',
+                                                            '11': 'Novembre',
+                                                            '10' : 'Octobre',
+                                                            '9': 'Septembre',
+                                                            '8' : 'Août',
+                                                            '7': 'Juillet',
+                                                            '6' : 'Juin',
+                                                            '5': 'Mai',
+                                                            '4': 'Avril',
+                                                            '3' : 'Mars',
+                                                            '2': 'Février',
+                                                            '1': "Janvier"}) }} {{ mois.an }}</td>
+                                                    <td>{{ mois.compteur }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <tr data-toggle="collapse" data-target=".child19">
+                                            <th>2019</th>
+                                            <th>Cumul :</th>
+                                            <th>{{ cumulAn.2.nombre }}</th>
+                                        </tr>
+                                        {% for mois in interventionsMois %}
+                                            {% if mois.an == '2019' %}
+                                                <tr class="collapse child19">
+                                                    <td></td>
+                                                    <td>{{ mois.mois|replace({
+                                                            '12' : 'Décembre',
+                                                            '11': 'Novembre',
+                                                            '10' : 'Octobre',
+                                                            '9': 'Septembre',
+                                                            '8' : 'Août',
+                                                            '7': 'Juillet',
+                                                            '6' : 'Juin',
+                                                            '5': 'Mai',
+                                                            '4': 'Avril',
+                                                            '3' : 'Mars',
+                                                            '2': 'Février',
+                                                            '1': "Janvier"}) }} {{ mois.an }}</td>
+                                                    <td>{{ mois.compteur }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <tr data-toggle="collapse" data-target=".child20">
+                                            <th>2020</th>
+                                            <th>Cumul :</th>
+                                            <th>{{ cumulAn.3.nombre }}</th>
+                                        </tr>
+                                        {% for mois in interventionsMois %}
+                                            {% if mois.an == '2020' %}
+                                                <tr class="collapse child20">
+                                                    <td></td>
+                                                    <td>{{ mois.mois|replace({
+                                                            '12' : 'Décembre',
+                                                            '11': 'Novembre',
+                                                            '10' : 'Octobre',
+                                                            '9': 'Septembre',
+                                                            '8' : 'Août',
+                                                            '7': 'Juillet',
+                                                            '6' : 'Juin',
+                                                            '5': 'Mai',
+                                                            '4': 'Avril',
+                                                            '3' : 'Mars',
+                                                            '2': 'Février',
+                                                            '1': "Janvier"}) }} {{ mois.an }}</td>
+                                                    <td>{{ mois.compteur }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <tr data-toggle="collapse" data-target=".child21">
+                                            <th>2021</th>
+                                            <th>Cumul :</th>
+                                            <th>{{ cumulAn.4.nombre }}</th>
+                                        </tr>
+                                        {% for mois in interventionsMois %}
+                                            {% if mois.an == '2021' %}
+                                                <tr class="collapse child21">
+                                                    <td></td>
+                                                    <td>{{ mois.mois|replace({
+                                                            '12' : 'Décembre',
+                                                            '11': 'Novembre',
+                                                            '10' : 'Octobre',
+                                                            '9': 'Septembre',
+                                                            '8' : 'Août',
+                                                            '7': 'Juillet',
+                                                            '6' : 'Juin',
+                                                            '5': 'Mai',
+                                                            '4': 'Avril',
+                                                            '3' : 'Mars',
+                                                            '2': 'Février',
+                                                            '1': "Janvier"}) }} {{ mois.an }}</td>
+                                                    <td>{{ mois.compteur }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="col-sm-6 SAUV">
+                                    <i class="fa fa-reply-all fa-fw"></i>
+                                    Le tableau situé à gauche représente le nombre de fiches créées par an,
+                                    puis par mois. Il suffit de cliquer sur une ligne pour en déplier le contenu.
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="encours">
+                                <h4>Fiches en cours sur les {{ periodedata }} derniers jours : à valider techniquement
+                                    puis en facturation </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Code Racco</th>
+                                        <th>Intervention</th>
+                                        <th>Opérateur TP</th>
+                                        <th>Client</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    {% if encours is defined %}
+                                        <tbody>
+                                        Nombre de fiches ouvertes : {{ nbencours }}.
+                                        {% for encours in encours %}
+                                            <tr>
+                                                <td><a
+                                                            href="{{ path('voirFiche', { 'id': encours.id }) }}">
+                                                        <img style="max-height: 15px"
+                                                             src="{{ asset('img/loupe.png') }}">&nbsp;
+                                                        &nbsp;{{ encours.id }}</a></td>
+                                                <td>  {{ encours.codeRacco }} </td>
+                                                <td>  {{ encours.intervention }} </td>
+                                                <td>  {{ encours.operateurTP }} </td>
+                                                <td> {% if encours.site%}{% if encours.site.client %}{{ encours.site.client.nomClient }}
+                                                    {% endif %}{% endif %}</td>
+                                                <td>  {{ encours.date|date('d-m-Y  H:i:s') }} </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    {% endif %}
+
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="avalider">
+                                <h4>Fiches à valider par la facturation sur les {{ periodedata }} derniers jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Code Racco</th>
+                                        <th>Intervention</th>
+                                        <th>Opérateur TP</th>
+                                        <th>Client</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    {% if favalider is defined %}
+                                        <tbody>
+                                        Nombre de fiches dont le raccordement est techniquement validé
+                                        : {{ nbavalider }}.
+                                        {% for avalider in favalider %}
+                                            <tr>
+                                                <td><a
+                                                            href="{{ path('voirFiche', { 'id': avalider.id }) }}">
+                                                        <img style="max-height: 15px"
+                                                             src="{{ asset('img/loupe.png') }}">&nbsp;
+                                                        &nbsp;{{ avalider.id }}</a></td>
+                                                <td>  {{ avalider.codeRacco }} </td>
+                                                <td>  {{ avalider.intervention }} </td>
+                                                <td>  {{ avalider.operateurTP }} </td>
+                                                <td> {% if avalider.site%}{% if avalider.site.client %}
+                                                        {{ avalider.site.client.nomClient }}{% endif %}{% endif %}</td>
+                                                <td>  {{ avalider.date|date('d-m-Y  H:i:s') }} </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="IVAL">
+                                <h4>Nombre d'installations facturées par centre sur les {{ periodedata }} derniers
+                                    jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Total Installations</th>
+                                        <th>Installations LM - 72</th>
+                                        <th>Installations LR - 85</th>
+                                        <th>Installations CL - 63</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+                                                    <td>{{ jour.compteur.interventionsJour }}</td>
+                                                    <td>{{ jour.compteur.installationsJour }}</td>
+                                                    <td>{{ jour.compteur.LM }}</td>
+                                                    <td>{{ jour.compteur.LR }}</td>
+                                                    <td>{{ jour.compteur.CL }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="CVAL">
+                                <h4>Fiches Compléments facturées ventilées par centre sur les {{ periodedata }} derniers
+                                    jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Total Compléments</th>
+                                        <th>Compléments LM - 72</th>
+                                        <th>Compléments LR - 85</th>
+                                        <th>Compléments CL - 63</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+                                                    <td>{{ jour.compteur.interventionsJour }}</td>
+                                                    <td>{{ jour.compteur.complementsJour }}</td>
+                                                    <td>{{ jour.compteur.LMC }}</td>
+                                                    <td>{{ jour.compteur.LRC }}</td>
+                                                    <td>{{ jour.compteur.CLC }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="RENVAL">
+                                <h4>Fiches Renouvellements facturées ventilées par centre sur les {{ periodedata }}
+                                    derniers
+                                    jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Total Renouvellements</th>
+                                        <th>Renouvellements LM - 72</th>
+                                        <th>Renouvellements LR - 85</th>
+                                        <th>Renouvellements CL - 63</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+                                                    <td>{{ jour.compteur.interventionsJour }}</td>
+                                                    <td>{{ jour.compteur.renouvellementsJour }}</td>
+                                                    <td>{{ jour.compteur.LMRN }}</td>
+                                                    <td>{{ jour.compteur.LRRN }}</td>
+                                                    <td>{{ jour.compteur.CLRN }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="REMVAL">
+                                <h4>Fiches Remontages Facturées ventilées par centre sur les {{ periodedata }} derniers
+                                    jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Total Remontages</th>
+                                        <th>Remontages LM - 72</th>
+                                        <th>Remontages LR - 85</th>
+                                        <th>Remontages CL - 63</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+                                                    <td>{{ jour.compteur.interventionsJour }}</td>
+                                                    <td>{{ jour.compteur.remontagesJour }}</td>
+                                                    <td>{{ jour.compteur.LMRN }}</td>
+                                                    <td>{{ jour.compteur.LRRN }}</td>
+                                                    <td>{{ jour.compteur.CLRN }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="SVAL">
+                                <h4>Fiches SAV Facturées ventilées par centre sur les {{ periodedata }} derniers
+                                    jours </h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Total SAV</th>
+                                        <th>SAV LM - 72</th>
+                                        <th>SAV LR - 85</th>
+                                        <th>SAV CL - 63</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+                                                    <td>{{ jour.compteur.interventionsJour }}</td>
+                                                    <td>{{ jour.compteur.savJour }}</td>
+                                                    <td>{{ jour.compteur.LMS }}</td>
+                                                    <td>{{ jour.compteur.LRS }}</td>
+                                                    <td>{{ jour.compteur.CLS }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade" id="toutes">
+                                <h4>Total des fiches par type d'intervention sur les {{ periodedata }} derniers jours
+                                    (si > 0)</h4>
+                                <table width="100%"
+                                       class="table table-striped table-bordered table-hover col-lg-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nombre d'interventions</th>
+                                        <th>Installations</th>
+                                        <th>Compléments</th>
+                                        <th>Remontages</th>
+                                        <th>Renouvellements</th>
+                                        <th>SAV</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if interventionsFacturees is defined %}
+                                        {% for jour in interventionsFacturees %}
+                                            {% if jour.compteur.interventionsJour !=0 %}
+                                                <tr>
+                                                    <td>{{ jour.jour.date|date('d-m-Y ') }}</td>
+
+                                                    <td>{{ jour.compteur.LMS + jour.compteur.LRS + jour.compteur.CLS +
+                                                        jour.compteur.LM + jour.compteur.LR + jour.compteur.CL +
+                                                        jour.compteur.LMC + jour.compteur.LRC + jour.compteur.CLC +
+                                                        jour.compteur.LMRM + jour.compteur.LRRM + jour.compteur.CLRM +
+                                                        jour.compteur.LMRN + jour.compteur.LRRN + jour.compteur.CLRN }}</td>
+
+                                                    <td>{{ jour.compteur.LM + jour.compteur.LR + jour.compteur.CL }}</td>
+                                                    <td>{{ jour.compteur.LMC + jour.compteur.LRC + jour.compteur.CLC }}</td>
+                                                    <td>{{ jour.compteur.LMRM + jour.compteur.LRRM + jour.compteur.CLRM }}</td>
+                                                    <td>{{ jour.compteur.LMRN + jour.compteur.LRRN + jour.compteur.CLRN }}</td>
+                                                    <td>{{ jour.compteur.LMS + jour.compteur.LRS + jour.compteur.CLS }}</td>
+
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script>
+            $(document).ready(function () {
+                $('.collapse').on('toggle.bs.collapse', function () {
+                    var groupId = $('#expander').attr('data-group-id');
+                });
+            });
+        </script>
+
+    {% endblock %}

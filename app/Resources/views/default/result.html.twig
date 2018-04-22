@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+         <div class="row">
+            <div class="col-md-12">
+                <div class="well-sm fond2" style="background-image:url('{{ asset('/image/fond2.jpg') }}')">
+                    <div class="text-center">
+                        Notre idée de voyage pour vous :
+
+                        {% if destination == 'Roma' %}
+                            <img src="{{ asset('/image/result/colosseum.png') }}" alt="destination">
+                            ROMA, Italie
+                        {% endif %}
+
+                        {% if destination == 'Paris' %}
+                            <img src="{{ asset('/image/result/eiffel.png') }}" alt="destination">
+                            PARIS, France
+                        {% endif %}
+
+                        {% if destination == 'London' %}
+                            <img src="{{ asset('/image/result/bigben.png') }}" alt="destination">
+                            LONDON, Grande-Bretagne
+                        {% endif %}
+
+                        {% if destination == 'India' %}
+                            <img src="{{ asset('/image/result/tajmahal.png') }}" alt="destination">
+                            India
+                        {% endif %}
+
+                        {% if destination == 'USA' %}
+                            <img src="{{ asset('/image/result/liberty.png') }}" alt="destination">
+                            NEW YORK, U.S.A.
+                        {% endif %}
+
+                        {% if destination == 'Egypt' %}
+                            <img src="{{ asset('/image/result/egypt.png') }}" alt="destination">
+                            Louxor, Egypte
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+  {% block javascripts %}
+      {{ parent() }}
+      <script type="text/javascript">
+      </script>
+  {% endblock %}
+

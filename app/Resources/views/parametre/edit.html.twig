@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container blanc" style="min-height:55em;">
+
+        <div class="container  blanc text-center " style="min-height: 810px">
+            <div class=" crea">
+                <hr>
+                <h1>Paramètre éditable</h1>
+                <hr>
+                {{ form_start(edit_form) }}
+                <table class=" col-md-offset-4">
+                    <tbody>
+
+                    <tr>
+                        <th>
+                            {{ form_label(edit_form.categorie) }}
+                            {{ form_errors(edit_form.categorie) }}
+                        </th>
+                        <td>
+                            {{ form_widget(edit_form.categorie) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ form_label(edit_form.valeur_libelle) }}
+                            {{ form_errors(edit_form.valeur_libelle) }}
+                        </th>
+                        <td>
+                            {{ form_widget(edit_form.valeur_libelle) }}
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+                <input type="submit" value="Valider les modifications"/>
+                {{ form_end(edit_form) }}
+                <hr>
+                <div>
+                    <hr>
+                            <a href="{{ path('parametre_index') }}">Retour aux paramètres</a>
+                            <hr>
+                            {{ form_start(delete_form) }}
+                            <input type="submit" value="Supprimer">
+                            {{ form_end(delete_form) }}
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    {# FORMULAIRE ET AFFICHAGE PERIPHERIQUE POUR MODIFICATION OU SUPPRESSION. #}
+    <div class="container blanc" style="min-height:55em;">
+
+        <div class="container  blanc text-center " style="min-height: 810px">
+            <div class=" crea">
+                <hr>
+                <h1>Modifier ou Supprimer
+                    <br> {{ periph.nom }}</h1>
+                <hr>
+                <table class=" col-md-offset-4">
+                    <tbody>
+                    <tr>
+                            {{ form_start(form) }}
+                            {{ form_row(form.nom) }}
+                    </tr>
+                    <tr>
+                            {{ form_row(form.type) }}
+                    </tr>
+                    <tr>
+                            {{ form_row(form.reference) }}
+                    </tr>
+                    <tr>
+                            {{ form_row(form.numserie) }}
+                    </tr>
+                    <tr>
+                            {{ form_row(form.version) }}
+                    </tr>
+                    <tr>
+                            {{ form_row(form.localisation) }}
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <input type="submit" value="Valider les modifications"/>
+                {{ form_end(form) }}
+                <hr>
+                <div>
+                    <hr>
+                    <a href="{{ path('supprimerPeripherique',{'peripherique': periph.id, 'id':fiche.id }) }}"
+                       onclick="return confirm('Confirmez la suppression de ce périphérique ?');">Supprimer
+                        ce périphérique</a>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

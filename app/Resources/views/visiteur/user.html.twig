@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container blanc" style="min-height: 57em;">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">Espace Utilisateur</h1>
+            <div class="row">
+                <div class="col-lg-12" style="font-size: 18px">
+                    <div class="col-sm-6">
+                        {% if is_granted('ROLE_RACCO') %}
+                            {% if fichesencours %}
+                                <ul>Pour rappel, vous avez des fiches raccordement en cours :<br><br>
+                                    {% for fiche in fichesencours %}
+                                        <li><a
+                                                    href="{{ path('editerFiche', { 'id': fiche.id }) }}">
+                                                <img class="icn" src="{{ asset('img/edit.png') }}">
+                                                {{ fiche.id }} &nbsp;{{ fiche.intervention }}</a>&nbsp;&nbsp;&nbsp;
+                                            Code racco : {{ fiche.codeRacco }}   </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <hr>
+                        {% endif %}
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Vous êtes
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                Administrateur de l'application et paramétrage, <br>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                Administrateur de l'application, <br>
+                            {% endif %}
+                            {% if is_granted('ROLE_RACCO') %}
+                                Opérateur raccordement (édition de fiches), <br>
+                            {% endif %}
+                            {% if is_granted('ROLE_USER') %}
+                                Visiteur (consultation des fiches).
+                            {% endif %}
+                        </p>
+
+                        <p>Vos Informations :</p>
+                        <ul>
+                            <li>Identifiant: {{ app.user.id }}</li>
+                            <li>Nom: {{ app.user.username }}</li>
+                            <li>Rôles:
+                                <ul>
+                                    {% for role in app.user.roles %}
+                                        <li>{{ role }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

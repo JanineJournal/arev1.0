@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc text-center " style="min-height: 800px">
+        <div class=" crea">
+            <h1 class="page-header">   <i class="fa fa-life-ring fa-3x" ></i><br><br>
+                Création d'un TP ou SAV</h1>
+        </div>
+        <div class="row">
+            <div class="panel panel-default ">
+                <div class="panel-body SAUV ">
+                        {{ form_start(form) }}
+                        <div style="display:none">
+                            {{ form_row(form.dateTP) }}
+                            {{ form_row(form._token) }}
+                        </div>
+                    <div class=" tp SAUV col-xs-12 col-sm-6 ">
+                        <p>
+                            {{ form_label(form.commentaire) }}
+                            <br>
+                            {{ form_errors(form.commentaire) }}
+                            {{ form_widget(form.commentaire) }}
+                        </p>
+
+                    </div>
+                    <div class=" SAUV col-xs-12 col-sm-6 text-right ">
+
+                        <p class="disabled"> {{ form_row(form.codeSite) }}</p>
+                        <p> {{ form_row(form.operateurtp) }}</p>
+                        <p> {{ form_row(form.facturable) }}</p>
+                        <p> {{ interTP.dateTP|date('d-m-Y')}} -
+                            {% if interTP.fiche %} Fiche_id : {{ interTP.fiche }}
+                        {% endif %}</p>
+                        <button type="submit" class="btn-lg btn">Enregistrer</button>
+                    </div>
+                </div> <p> {{ form_end(form) }} </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

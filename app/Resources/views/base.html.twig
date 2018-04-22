@@ -1,0 +1,193 @@
+<!-- page de base étendue par toutes les autres -->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="appli racco">
+    <meta name="author" content="dsi nexecur">
+
+    <title>{% block title %}VERA - Vérif Racco{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="icon" href="{{ asset('favicon.ico') }}" />
+        <!-- liens vers toutes les pages de style intégrées au projet (évite doublons) -->
+        <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('sb-admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/jquery.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/jquery.dataTables_themeroller.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.foundation.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.jqueryui.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables-plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.material.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.semanticui.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables/css/dataTables.uikit.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/datatables-responsive/dataTables.responsive.css') }}" rel="stylesheet">
+        <link href="{{ asset('sb-admin2/dist/css/sb-admin-2.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/overwrite.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    {% block nav %}
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('accueil') }}"><img height="92%"
+                                                                      src="{{ asset('img/VerificationRaccordement.png') }}"
+                                                                      alt="Appli Racco"/></a>
+        </div>
+        <!-- /.navbar-header -->
+        <ul class="nav navbar-top-links navbar-right">
+        {% if is_granted('ROLE_ADMIN') %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-eye fa-fw"></i>
+                        &nbsp;Espace
+                        Administration
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-admin">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="{{ path('report') }}"> <i
+                                        class="fa fa-line-chart fa-fw"></i>
+                                Statistiques
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="{{ path('admin' ) }}"> <i class="fa fa-sliders fa-fw"></i>
+                                Administrer l'appli </a>
+                        </li>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li class="divider"></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="{{ path('superadmin' ) }}"><i class="fa fa-bug fa-fw"></i>
+                                    Super Admin' </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+
+            {% if is_granted('ROLE_RACCO') %}
+                <li>
+                    <a href="{{ path('choix') }}"><i class="fa fa-pencil-square-o  fa-fw"></i> Créer Fiche
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('parametre_index') }}"><i class="fa fa-cart-plus  fa-fw"></i>  Paramètres</a>
+                </li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-folder-open-o fa-fw"></i>
+                        Dossiers <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-files">
+                        <li>
+                            <a href="{{ path('afficherDossier') }}">
+                                <i class="fa fa-search fa-fw"></i> Recherche par Code Racco</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ path('afficherDossierClient') }}">
+                                <i class="fa fa-search fa-fw"></i> Recherche par Code Client</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ path('listeFiches') }}">
+                                <i class="fa fa-list-ul fa-fw"></i> Liste Fiches
+                            </a>
+                        </li>
+                        {#  <li class="divider"></li>
+                        <li>
+                            <a href="{{ path('listeTP') }}">
+                                <i class="fa fa-life-bouy fa-fw"></i> Liste TP/ SAV
+                            </a>
+                        </li>
+                        #}
+                    </ul>
+                </li>
+            {% endif %}
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-wrench fa-fw"></i>
+                    Mon Application
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="{{ path('user_question') }}">
+                            <div>
+                                <i class="fa fa-user-secret fa-fw"></i>
+                                Ma fiche Utilisateur
+                            </div>
+                        </a>
+                    </li>
+                    {#
+                    <li class="divider"></li>
+                     <li>
+                          <a href="{{ path('fos_user_change_password') }}">
+                              <div>
+                                  <i class="fa fa-key fa-fw"></i> Changer mot de passe
+                              </div>
+                          </a>
+                      </li>
+                      #}
+                      <li class="divider"></li>
+                      <li>
+                          <a href="{{ path('fos_user_security_logout') }}">
+                              <div>
+                                  <i class="fa fa-sign-out fa-fw"></i> Déconnexion
+                              </div>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+
+          <!---------------------------------- BLOC DE MENU TOP - ------------------------>
+          <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+      {% endblock %}
+  </nav>
+
+  <div id="wrapper">
+      {% block body %}
+
+      {% endblock %}
+  </div>
+
+  {% block footer %}
+      <!-- -----------------------------  BLOC FOOTER _ pied de page ------------------>
+      <footer id="footer">
+          <div>
+              <a href="{{ path('accueil') }}"><img src="{{ asset('img/nexecur.png') }}" height="100%"
+                                                   alt="Appli Racco"/></a>
+          </div>
+      </footer>
+  {% endblock %}
+
+  {% block javascripts %}
+      <!-- liens vers les fichiers js intégrés à notre projet -->
+      {# <script src="{{ asset('js/bootstrap-switch.js') }}"></script>#}
+      <script src="{{ asset('js/jquery-3.2.1.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/jquery.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables-plugins/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.foundation.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.jqueryui.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.material.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.semanticui.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables/js/dataTables.uikit.js') }}"></script>
+    <script src="{{ asset('sb-admin2/datatables-responsive/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('sb-admin2/metisMenu/metisMenu.js') }}"></script>
+    <script src="{{ asset('sb-admin2/dist/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+
+{% endblock %}
+</body>
+</html>

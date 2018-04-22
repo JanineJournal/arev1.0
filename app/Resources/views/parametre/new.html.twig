@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc text-center " style="min-height: 810px">
+        <div class=" crea">
+            <h1>Création d'un paramètre</h1>
+            <hr>
+            {{ form_start(form) }}
+            <table class=" col-md-offset-4">
+                <tbody>
+                <tr>
+                    <th>
+                        {{ form_label(form.categorie) }}
+                        {{ form_errors(form.categorie) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.categorie) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ form_label(form.valeur_libelle) }}
+                        {{ form_errors(form.valeur_libelle) }}
+                    </th>
+                    <td>
+                        {{ form_widget(form.valeur_libelle) }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Créer"/>
+            {{ form_end(form) }}
+            <hr>
+            <div>
+                <a href="{{ path('parametre_index') }}">Liste des Paramètres</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

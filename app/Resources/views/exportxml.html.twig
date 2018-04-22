@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+<div class="container  blanc " style="min-height: 500px">
+
+        {{ xml|nl2br }}
+
+</div>
+{% endblock %}

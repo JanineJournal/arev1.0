@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container  blanc text-center " style="min-height: 810px">
+    <div class=" crea">
+        {% if fichescherchees is not defined %}
+            <img src="{{ asset('img/arev (23).png') }}"/>
+        {% endif %}
+
+        <h1>Saisie du Code Raccordement</h1>
+    </div>
+    <div class="row ">
+        <div class="panel panel-default " style="border: none">
+            <div class="panel-body  ">
+                <div class="SAUV ">
+                    <p>{{ form_start(form) }} </p>
+                    <p>  {{ form_widget(form.coderacco) }} </p>
+                    <p>{{ form_end(form) }}</p>
+                </div>
+                <div>
+                    <div class="col-lg-9">
+                        {% if fichescherchees is defined %}
+                            <h4> Fiches avec Code Racco {{ coderacco }}</h4>
+                            <table class="table table-striped table-bordered table-hover"
+                                   style="font-weight:normal; text-align: left">
+                                <thead>
+                                <tr>
+                                    <th>Dupliquer</th>
+                                    <th>Ajouter</th>
+                                    <th>Consulter</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for fiche in fichescherchees %}
+                                    <tr>
+                                        <td>
+                                                {% if fiche.statut != "en cours" %}
+                                                    <a href="{{ path('dupliquerFiche', { 'id': fiche.id }) }}"><img
+                                                                class="icn"
+                                                                src="{{ asset('img/PICTO-FICHE.png') }}">Nouvelle
+                                                        Intervention
+                                                    </a>&nbsp;&nbsp;
+                                            {% endif %}
+                                        </td>
+                                        <td> &nbsp; <a href="{{ path('ajoutTPsav', {'fiche': fiche.id}) }}"><i class="fa fa-life-ring" ></i>
+                                                + TP / SAV </a></td>
+                                        <td><a href="{{ path('voirFiche', { 'id': fiche.id }) }}">
+                                            <img    class="icn"   src="{{ asset('img/PICTO-LOUPE.png') }}">
+                                                {% if fiche.intervention %} {{ fiche.intervention }} - {% endif %}
+                                                {% if fiche.site %}
+                                                {% if fiche.site.nomSite %}{{ fiche.site.nomSite }}
+                                               -{% endif %}
+                                                {% if fiche.site.codeSite %}{{ fiche.site.codeSite }}
+                                                    -{% endif %}
+                                                    {% if fiche.site.client %} {{ fiche.site.client.nomClient }}&nbsp;{% endif %}{% endif %}</a>&nbsp;
+                                        </td>
+                                        <td>{% if fiche.date %}{{ fiche.date|date('Y-m-d') }}{% endif %}</td>
+                                        <td>{% if fiche.statut %}
+                                                {{ fiche.statut }}
+                                            {% endif %}&nbsp;
+                                            {% if is_granted('ROLE_RACCO') %} {% endif %}
+                                            {% if fiche.statut =='en cours' %}
+                                                <a href="{{ path('editerFiche', { 'id': fiche.id }) }}">
+                                                    <img class=icn
+                                                         src="{{ asset('img/edit.png') }}"></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                    {% if choix is defined %}
+                        {% if is_granted('ROLE_RACCO') %}
+                            <div class="col-lg-3">
+                                <h4>Si aucune fiche ne correspond</h4>
+                                <div class="text-center">
+                                    <a class="btn " href="{{ path('rechclientAX', {'code': coderacco}) }}" style="font-size: 16px;">
+                                        <img src="{{ asset('img/arev (5).png') }}" style= "width: 90px"/>
+                                        <br>-<br>
+                                        Créer une <br>Fiche Racco </a>
+                                    <hr>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

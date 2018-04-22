@@ -1,0 +1,844 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/bootstrap-switch.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {# FORMULAIRE ET AFFICHAGE DONNEES DE LA FICHE AVANT VALIDATION PAR LE RACCO. #}
+
+    <div class="container blanc" style="min-height: 870px">
+        <div class="col-lg-12"><h1 class="page-header">Code Racco {{ fiche.coderacco }} - Fiche {{ fiche.statut }}
+                le {% if fiche.date %}{{ fiche.date|date('d-m-Y') }}{% endif %}</h1></div>
+
+        {# message en cas de validation non possible : saisie incomplete soumise #}
+
+        <div class="row">
+            <ul>
+                {% for message in app.flashes('notice') %}
+                    <li class="flash-notice">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {# liste des TP et SAV déjà liés à cette fiche  #}
+        <div class="row">
+            <ul>
+                {% if tps %}
+                    {% for tp in tps %}
+                        <li class="tps">
+                            {{ tp.commentaire }}
+                            {{ tp.datetp|date('d-m-Y') }}
+
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+
+        {# DEBUT DU FORMULAIRE #}
+
+        {# Données client : récupérées de AX ou saisies #}
+
+        <div class="row">
+            <div class=" panel-default ">
+                <div class="panel-heading  btn btn-lg btn-block ">
+                    Client & Site
+                </div>
+                <div class="panel-body  ">
+                    <div class=" col-xs-12 col-sm-4 text-right">
+                        {{ form_start(form) }}
+                        {{ form_row(form._token) }}
+                        <div style="display:none">
+                            <p> {{ form_row(form.coderacco) }}</p>
+                        </div>
+                        <p> {{ form_row(form.intervention) }}</p>
+                        <p> {{ form_row(form.centretsv) }}
+                            {{ form_row(form.tsvsecours) }}</p>
+                        <p> {{ form_row(form.technicien) }}</p>
+                        <p> {{ form_row(form.numCommande) }}</p>
+                        <p> {{ form_row(form.technicien) }}</p>
+                        <p> {{ form_row(form.operateurtp) }}</p>
+                        <p> {{ form_row(form.numCommande) }}</p>
+                        <p>  {{ form_row(form.mdpClient) }} </p>
+                        <p>  {{ form_row(form.site.client.type) }}</p>
+                    </div>
+                    <div class=" col-xs-12 col-sm-4 text-center">
+                        <p>  {{ form_row(form.site.codeSite) }}</p>
+                        <p>  {{ form_errors(form.site.nomSite) }}
+                            {{ form_widget(form.site.nomSite, { 'attr': {'style':
+                                'width: 350px'} }) }}
+                        </p>
+                        <p>
+                            {{ form_errors(form.site.adresseSite01) }}
+                            {{ form_widget(form.site.adresseSite01, { 'attr': {'style':
+                                'width: 350px'} }) }}
+                        </p>
+                        <p>
+                            {{ form_errors(form.site.codePostalSite) }}
+                            {{ form_widget(form.site.codePostalSite, { 'attr': {'style':
+                                'width: 130px'} }) }}
+
+                            {{ form_errors(form.site.villeSite) }}
+                            {{ form_widget(form.site.villeSite, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                        <p>   {{ form_label(form.site.numtel1) }}
+                            {{ form_errors(form.site.numtel1) }}
+                            {{ form_widget(form.site.numtel1, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                        <p>   {{ form_label(form.site.numtel2) }}
+                            {{ form_errors(form.site.numtel2) }}
+                            {{ form_widget(form.site.numtel2, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                        <p>   {{ form_label(form.site.numtel3) }}
+                            {{ form_errors(form.site.numtel3) }}
+                            {{ form_widget(form.site.numtel3, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                        <p>   {{ form_label(form.site.numtel4) }}
+                            {{ form_errors(form.site.numtel4) }}
+                            {{ form_widget(form.site.numtel4, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                    </div>
+                    <div class=" col-xs-12 col-sm-4 text-right">
+                        <p>  {{ form_row(form.site.client.codeclient) }}</p>
+                        <p>
+                            {{ form_errors(form.site.client.nomclient) }}
+                            {{ form_widget(form.site.client.nomclient, { 'attr': {'style':
+                                'width: 350px'} }) }}
+                        </p>
+                        <p>
+                            {{ form_errors(form.site.client.adresse01) }}
+                            {{ form_widget(form.site.client.adresse01, { 'attr': {'style':
+                                'width: 350px'} }) }}
+                        </p>
+                        <p>
+                            {{ form_errors(form.site.client.codepostal) }}
+                            {{ form_widget(form.site.client.codepostal, { 'attr': {'style':
+                                'width: 130px'} }) }}
+
+                            {{ form_errors(form.site.client.villelocalite) }}
+                            {{ form_widget(form.site.client.villelocalite, { 'attr': {'style':
+                                'width: 200px'} }) }}
+                        </p>
+                        <p>   {{ form_row(form.site.client.numtel1) }} </p>
+                        <p>   {{ form_row(form.site.client.numtel2) }}</p>
+                        <br>
+                        <div>
+                            <table style="text-align: right">
+                                <tr style="border-bottom: none;">
+                                    <td class="SAUV"><a
+                                                class="btn btn-default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                                                href="{{ path('actualiserClientSite', { 'id' : fiche.id }) }}"
+                                                data-toggle="tooltip" style="padding: 8px; font-size: 16px;"
+                                                data-original-title="Si les codes site et client sont renseignés">
+                                            Actualiser <br> Site & Client</a></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-lg">Sauvegarder</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# PARTIE CONCERNANT LES HABILITES DE LA FICHE RACCO - A SAISIR #}
+
+        <div class="row">
+            <div class=" panel-group" id="accordeon2">
+                <div class="panel panel-default">
+                    <a data-toggle="collapse" data-parent="#accordeon2" href="#collapse2"
+                       class="panel-heading btn btn-lg btn-block ">
+                        <i class="fa fa-users" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+                        Habilités &nbsp; &nbsp;&nbsp;<i class="fa fa-angle-double-down"
+                                                        aria-hidden="true"></i>
+                    </a>
+                    <div class=" col-xs-12" id="prototype-habi">
+                        {% set prototype_habilite = form.habilite.vars.prototype %}
+                        <section class="form-group">
+                            <table class="table table-responsive periphList" style="margin: 0;">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {{ form_errors(prototype_habilite.civilite) }}
+                                        {{ form_widget(prototype_habilite.civilite) }}
+
+                                        {{ form_errors(prototype_habilite.nomhabili) }}
+                                        {{ form_widget(prototype_habilite.nomhabili, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Nom*"} }) }}
+
+                                        {{ form_errors(prototype_habilite.prenomhabili) }}
+                                        {{ form_widget(prototype_habilite.prenomhabili, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Prénom"} }) }}
+
+                                        {{ form_errors(prototype_habilite.typehabili) }}
+                                        {{ form_widget(prototype_habilite.typehabili) }}
+
+                                        {{ form_errors(prototype_habilite.mdphabili) }}
+                                        {{ form_widget(prototype_habilite.mdphabili, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Mot de passe"} }) }}
+                                    </td>
+                                    <td>
+                                        {{ form_errors(prototype_habilite.numtel) }}
+                                        {{ form_widget(prototype_habilite.numtel, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Numéro Tél. *"} }) }}
+
+                                        {{ form_errors(prototype_habilite.numtel2) }}
+                                        {{ form_widget(prototype_habilite.numtel2, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Numéro Tél. 2"} }) }}
+
+                                        {{ form_errors(prototype_habilite.numtel3) }}
+                                        {{ form_widget(prototype_habilite.numtel3, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Numéro Tél. 3"} }) }}
+
+                                        {{ form_errors(prototype_habilite.numtel4) }}
+                                        {{ form_widget(prototype_habilite.numtel4, { 'attr': {'style':
+                                            'width: 200px', 'placeholder': "Numéro Tél. 4"} }) }}
+
+                                    </td>
+                                    <td style="vertical-align:middle ; ">
+                                        <button type="submit"
+                                                data-toggle="tooltip"
+                                                data-original-title="L'enregistrement de ce responsable nécessite au moins les nom, type et numéro de téléphone.">
+                                            <img
+                                                    src="{{ asset('/img/arev (4).png') }}" style="height: 3em;">
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                        <p><a data-toggle="collapse" data-parent="#accordeon2" href="#collapse2"
+                              class="panel-heading btn btn-lg btn-block ">
+                                Voir les habilités. &nbsp; &nbsp;<i class="fa fa-angle-double-down"
+                                                                    aria-hidden="true"></i></a>
+                        </p>
+
+                        <div class="panel-collapse collapse" aria-expanded="false" id="collapse2">
+                            <div class="col-xs-12">
+                                <table class="table periphList suppList" style="margin: 0; ">
+                                    {% for habilite in form.habilite %}
+                                        <tbody class="pourSupp">
+                                        <tr class="pourSupp">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            {{ form_label(habilite.civilite) }}
+                                                            {{ form_errors(habilite.civilite) }}
+                                                            {{ form_widget(habilite.civilite) }}
+                                                        </th>
+                                                        <th>
+                                                            {{ form_label(habilite.nomhabili) }}
+                                                            {{ form_errors(habilite.nomhabili) }}
+                                                            {{ form_widget(habilite.nomhabili) }}
+                                                        </th>
+                                                        <td>
+                                                            {{ form_label(habilite.prenomhabili) }}
+                                                            {{ form_errors(habilite.prenomhabili) }}
+                                                            {{ form_widget(habilite.prenomhabili) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_label(habilite.typehabili) }}
+                                                            {{ form_errors(habilite.typehabili) }}
+                                                            {{ form_widget(habilite.typehabili) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_label(habilite.mdphabili) }}
+                                                            {{ form_errors(habilite.mdphabili) }}
+                                                            {{ form_widget(habilite.mdphabili) }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Numéro(s) téléphone
+                                                        </th>
+                                                        <td>
+                                                            {{ form_errors(habilite.numtel) }}
+                                                            {{ form_widget(habilite.numtel) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_errors(habilite.numtel2) }}
+                                                            {{ form_widget(habilite.numtel2) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_errors(habilite.numtel3) }}
+                                                            {{ form_widget(habilite.numtel3) }}
+                                                        </td>
+                                                        <td>
+                                                            {{ form_errors(habilite.numtel4) }}
+                                                            {{ form_widget(habilite.numtel4) }}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="vertical-align: middle; ">
+                                                <button type="submit" style="vertical-align: middle;"><i
+                                                            class="fa fa-refresh fa-3x"
+                                                            aria-hidden="true"
+                                                            data-toggle="tooltip"
+                                                            data-original-title="Prise en compte des modifications"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Radio ou Filaire, suite du form fiche #}
+
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel-default">
+                    <div class="panel-heading btn btn-lg btn-block ">
+                        Centrale
+                    </div>
+                    <div class="panel-body text-right">
+                        <div class=" col-xs-12 col-sm-3 text-right">
+                            <p> {{ form_label(form.typeCentrale) }}
+                                {{ form_errors(form.typeCentrale) }}
+                                {{ form_widget(form.typeCentrale) }}
+                            </p>
+                            <p> {{ form_label(form.referencecentrale) }}
+                                {{ form_errors(form.referencecentrale) }}
+                                {{ form_widget(form.referencecentrale) }}
+                            </p>
+                            <p><label>Choisir * : </label>
+                                <input type="checkbox" id="raccocheckbox"
+                                       name="radiobutton">
+                            </p>
+                        </div>
+                        <div class=" col-xs-12 col-sm-3 text-right">
+                            <p>{{ form_label(form.version) }}
+                                {{ form_errors(form.version) }}
+                                {{ form_widget(form.version) }}
+                            </p>
+                            <p> {{ form_label(form.firmware) }}
+                                {{ form_errors(form.firmware) }}
+                                {{ form_widget(form.firmware) }}
+                            </p>
+                            <p> {{ form_label(form.prom) }}
+                                {{ form_errors(form.prom) }}
+                                {{ form_widget(form.prom) }}
+                            </p>
+                            <p> {{ form_label(form.masque) }}
+                                {{ form_errors(form.masque) }}
+                                {{ form_widget(form.masque) }}
+                            </p>
+                        </div>
+                        <div class=" col-xs-12 col-sm-3 text-right">
+                            <p>{{ form_row(form.localisationCentrale) }}</p>
+                            <p>{{ form_row(form.numserieCentrale) }}</p>
+                        </div>
+                        <div class=" col-xs-12 col-sm-3 text-right">
+                            <button type="submit" class="btn btn-lg">Sauvegarder</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="collapseradio" class="panel-default  ">
+                    <div class="panel-heading btn btn-lg btn-block ">
+                        Raccordement Radio
+                    </div>
+                    <div class="panel-body text-right">
+                        <div class=" col-xs-12 col-sm-4 text-right">
+                            <p> {{ form_row(form.programmation) }}</p>
+                            <a class="btn btn-default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                               href="{{ path('afficherINI', { 'id': fiche.id }) }}"
+                               onclick="window.open(this.href); return false;"
+                               data-toggle="tooltip"
+                               data-original-title="Cette manoeuvre va effacer les données précédemment envoyées par la Centrale">Ouvrir le .INI</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-4 text-right">
+                            <p>  {{ form_row(form.radio.operateurSim) }}</p>
+                            <p> {{ form_row(form.radio.numTelsim) }}</p>
+                            <p> {{ form_row(form.radio.numSeriesim) }}</p>
+                            <button class="btn btn-lg">bouton pour passer de l'un à l'autre</button>
+                        </div>
+                        <div class=" col-xs-12 col-sm-4 text-right">
+                            <p>  {{ form_row(form.radio.emplacementClavier) }}</p>
+                            <p>  {{ form_row(form.radio.emplacementHP) }}</p>
+                            <p>  {{ form_row(form.radio.emplacementdisj) }}</p>
+                        </div>
+                    </div>
+
+
+                    {# PARTIE CONCERNANT LES ZONES LIEES A LA CENTRALE RACCORDEE  & SAISIES  #}
+                    <div class="panel-heading btn btn-lg btn-block ">
+                        <i class="fa fa-columns" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;Secteurs & Périphériques
+                    </div>
+
+                    <table width="100%"
+                           class="table table-bordered " style="padding: 2px; font-size: 14px">
+                        <thead>
+                        </thead>
+                        {% if fiche.secteur %}
+                            <tbody>
+                            {% for zone in fiche.secteur %}
+                                <tr class="zone">
+                                    <td >{% if zone.nom %} {{ zone.nom }}        {% endif %}</td>
+                                    <td>     {% if zone.sp1 %} SP1 :  {{ zone.sp1 }}       {% endif %} </td>
+                                    <td>     {% if zone.sp2 %} SP2 :{{ zone.sp2 }}        {% endif %} </td>
+                                    <td colspan="4">     {% if zone.tempo %} TEMPO      &nbsp; &nbsp;{% endif %}
+                                        {% if zone.entree %} Entrée : {{ zone.entree }}'   &nbsp;{% endif %}
+                                        {% if zone.sortie %} Sortie : {{ zone.sortie }}'    &nbsp;{% endif %} </td>
+                                </tr>
+                                <tr style="background-color:#e5e6e5 ">
+                                    <th>PERIPHERIQUES</th>
+                                    <th>Type</th>
+                                    <th>Réf.</th>
+                                    <th>NS</th>
+                                    <th>Version</th>
+                                    <th>Localisation</th>
+                                    <th>Code Transmis</th>
+                                </tr>
+                                {% for peri in zone.peripherique %}
+                                    <tr class="{% if peri.additionnel == true %} additionnel {% endif %}">
+                                        <td class="text-right">{% if peri.additionnel == true %} <a
+                                            href="{{ path('modifPeriph',{'peripherique': peri.id, 'id':fiche.id }) }}">
+                                                Modifier ou Supprimer</a>&nbsp;:&nbsp;&nbsp; {% endif %}
+                                        {% if peri.nom %} {{ peri.nom }}  {% endif %}   </td>
+                                        <td>{% if peri.type %} {{ peri.type }}  {% endif %}   </td>
+                                        <td>{% if peri.reference %} {{ peri.reference }} {% endif %}  </td>
+                                        <td>{% if peri.numSerie %} {{ peri.numSerie }} {% endif %}  </td>
+                                        <td>{% if peri.version %} {{ peri.version }}  {% endif %} </td>
+                                        <td>{% if peri.localisation %} {{ peri.localisation }}  {% endif %} </td>
+                                        <td>{% if peri.codeTransmis %} {{ peri.codeTransmis }}  {% endif %} </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+
+                <div id="collapsefilaire" class=" panel-default">
+                    <div class="panel-heading btn btn-lg btn-block ">
+                        Raccordement Filaire
+                    </div>
+                    <div class="panel-body text-right">
+                        <div class="  SAUV col-xs-12 col-sm-4 ">
+                            <p>  {{ form_row(form.filaire.gmesappel) }}</p>
+                            <p>  {{ form_row(form.filaire.mesauto) }}</p>
+                            <p>  {{ form_row(form.filaire.gestionhoraire) }}</p>
+                        </div>
+                        <div class=" SAUV col-xs-12 col-sm-4 ">
+                            <p> {{ form_row(form.filaire.adresseip) }}</p>
+                            <p> {{ form_row(form.filaire.gsm) }}</p>
+                            <p> {{ form_row(form.filaire.ipfixe) }}</p>
+                            <p> {{ form_row(form.filaire.portspc) }}</p>
+                            <p> {{ form_row(form.filaire.portsortant) }}</p>
+                            <p> {{ form_row(form.filaire.portweb) }}</p>
+                            <p> {{ form_row(form.filaire.mdpweb) }}</p>
+                        </div>
+                        <div class=" col-xs-12 col-sm-4 ">
+                            <p> {{ form_row(form.filaire.clecryptage) }} </p>
+                            <p> {{ form_row(form.filaire.fai) }}</p>
+                            <p>  {{ form_row(form.filaire.operateurSim) }}</p>
+                            <p>  {{ form_row(form.filaire.numCarteSim) }}</p>
+                            <p>  {{ form_row(form.filaire.numVoix) }}</p>
+                            <p>  {{ form_row(form.filaire.numData) }}</p>
+                            <p>
+                                <button type="submit" class="btn btn-lg">Sauvegarder</button>
+                            </p>
+                        </div>
+                    </div>
+                    {# PARTIE CONCERNANT LES ZONES LIEES A LA CENTRALE RACCORDEE  - SAISIES  #}
+                    <div class="panel-heading btn btn-lg btn-block ">
+                        <i class="fa fa-columns" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;Secteurs & Périphériques
+                    </div>
+
+                    <table width="100%"
+                           class="table table-bordered table-hover " style="padding: 2px; font-size: 14px">
+                        <thead>
+                        <tr style="background-color:#e5e6e5 ">
+                            <th>Zone ou Secteur</th>
+                            <th></th>
+                            <th>SP1</th>
+                            <th>SP2</th>
+                            <th>Entrée</th>
+                            <th>Sortie</th>
+                            <th>Tempo</th>
+                        </tr>
+                        </thead>
+                        {% if fiche.secteur %}
+                            <tbody>
+                            {% for zone in fiche.secteur %}
+                                <tr>
+                                    <td></td>
+                                    <td>{% if zone.nom %} {{ zone.nom }}        {% endif %}</td>
+                                    <td>     {% if zone.sp1 %} {{ zone.sp1 }}       {% endif %} </td>
+                                    <td>     {% if zone.sp2 %} {{ zone.sp2 }}        {% endif %} </td>
+                                    <td>     {% if zone.entree %} {{ zone.entree }}     {% endif %} </td>
+                                    <td>     {% if zone.sortie %}{{ zone.sortie }}      {% endif %} </td>
+                                    <td>     {% if zone.tempo %} {{ zone.tempo }}      {% endif %}</td>
+
+                                <tr>
+                                    <th></th>
+                                    <th>PERIPHERIQUES</th>
+                                    <th>Type</th>
+                                    <th>Réf.</th>
+                                    <th>NS</th>
+                                    <th>Version</th>
+                                    <th>Localisation</th>
+                                </tr>
+                                {% for peri in zone.peripherique %}
+                                        <tr class="{% if peri.additionnel == true %} additionnel {% endif %}">
+                                            <td>{% if peri.additionnel == true %} <a class="btn "
+                                                                                     href="{{ path('modifPeriph',
+                                                                                     {'peripherique': peri.id, 'id':fiche.id }) }}">
+                                                    Modifier ou Supprimer</a> {% endif %}</td>
+                                            <td>{% if peri.nom %} {{ peri.nom }}  {% endif %}   </td>
+                                            <td>{% if peri.type %} {{ peri.type }}  {% endif %}   </td>
+                                            <td>{% if peri.reference %} {{ peri.reference }} {% endif %}  </td>
+                                            <td>{% if peri.numSerie %} {{ peri.numSerie }} {% endif %}  </td>
+                                            <td>{% if peri.version %} {{ peri.version }}  {% endif %} </td>
+                                            <td>{% if peri.localisation %} {{ peri.localisation }}  {% endif %} </td>
+                                        </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel-group" style="margin-bottom: 0">
+                <div class="panel panel-default">
+                    <a data-toggle="collapse" data-parent="#accordeon6" href="#collapse6"
+                       class="panel-heading btn btn-lg btn-block " style="font-size: 20px; opacity: 0.75">&nbsp;
+                        Déplier pour Ajouter un Périphérique&nbsp;<i
+                                class="fa fa-angle-double-down"
+                                aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-collapse collapse" aria-expanded="false" id="collapse6">
+                <section class="form-group">
+                    <table class="table table-responsive periphList" style="margin: 0;">
+                        <tbody>
+                        <tr>
+                            <td>
+                                {{ form_errors(periphForm.nom) }}
+                                {{ form_widget(periphForm.nom, { 'attr': {'style':
+                                    'width: 180px', 'placeholder': "Nom du Périphérique"} }) }}
+                                {{ form_errors(periphForm.type) }}
+                                {{ form_widget(periphForm.type, { 'attr': {'style':
+                                    'width: 150px', 'placeholder': "Type"} }) }}
+                                {{ form_errors(periphForm.reference) }}
+                                {{ form_widget(periphForm.reference, { 'attr': {'style':
+                                    'width: 150px', 'placeholder': "Référence"} }) }}
+                            </td>
+                            <td>
+                                {{ form_errors(periphForm.localisation) }}
+                                {{ form_widget(periphForm.localisation, { 'attr': {'style':
+                                    'width: 150px', 'placeholder': "Localisation"} }) }}
+                                {{ form_errors(periphForm.numserie) }}
+                                {{ form_widget(periphForm.numserie, { 'attr': {'style':
+                                    'width: 150px', 'placeholder': "Numéro de Série"} }) }}
+                                {{ form_errors(periphForm.version) }}
+                                {{ form_widget(periphForm.version, { 'attr': {'style':
+                                    'width: 100px', 'placeholder': "Version"} }) }}
+                            </td>
+                            <td style="vertical-align:middle ; ">
+                                {{ form_rest(periphForm) }}
+                            </td>
+                            <td>
+                                <button type="submit" style="margin: 0; padding: 0;">
+                                    <img
+                                            src="{{ asset('/img/arev (4).png') }}" style="height: 2em;">
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+        <hr>
+        {# PARTIE CONCERNANT l'application ET LA VIDEO #}
+
+        <div class="row">
+            <div class=" panel-group" id="accordeon5">
+                <div class="panel panel-default">
+                    <a data-toggle="collapse" data-parent="#accordeon5" href="#collapse5"
+                       class="panel-heading btn btn-lg btn-block ">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-file-movie-o" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+                        Smartphone et Appli &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-down"
+                                                                       aria-hidden="true"></i>
+                    </a>
+                    <div class="col-xs-12">
+                        <section class="form-group">
+                            <table class="table periphList" style="margin: 0; vertical-align:middle ;  ">
+                                <tr>
+                                    <th style="padding-top: 20px ">
+                                        {{ form_label(form.appsmartphone.typeapplication) }}
+                                        {{ form_widget(form.appsmartphone.typeapplication) }}
+                                        {{ form_errors(form.appsmartphone.typeapplication) }}
+                                    </th>
+                                    <td style="padding-top: 20px ">
+                                        {{ form_label(form.appsmartphone.codepin) }}
+                                        {{ form_widget(form.appsmartphone.codepin, { 'attr': {'style': 'width: 100px'} }) }}
+                                        {{ form_errors(form.appsmartphone.codepin) }}
+                                    </td>
+                                    <td style="padding-top: 20px ">
+                                        {{ form_label(form.appsmartphone.streaming) }}
+                                        {{ form_widget(form.appsmartphone.streaming) }}
+                                        {{ form_errors(form.appsmartphone.streaming) }}
+                                    </td>
+                                    <td style="vertical-align:middle ; padding-top: 20px ">
+                                        <button type="submit">
+                                            <img
+                                                    src="{{ asset('/img/arev (4).png') }}" style="height: 3em;">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </section>
+                        {% set prototype_comptevid = form.appsmartphone.comptevideo.vars.prototype %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" panel-group">
+                <div class="panel panel-default">
+                    <a data-toggle="collapse" data-parent="#accordeon5" href="#collapse5"
+                       class="panel-heading btn btn-lg btn-block " style="font-size: 20px; opacity: 0.75">&nbsp;
+                        Déplier pour compte(s) Application&nbsp;&nbsp;<i
+                                class="fa fa-angle-double-down"
+                                aria-hidden="true"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="panel-collapse collapse" aria-expanded="false" id="collapse5">
+                <div class="col-xs-12">
+                    <table>
+                        <tr>
+                            {{ form_errors(prototype_comptevid.identifiant) }}
+                            {{ form_widget(prototype_comptevid.identifiant, { 'attr': {'style': 'width: 150px'
+                                , 'placeholder': "Identifiant "} }) }}
+                            {{ form_errors(prototype_comptevid.localisation) }}
+                            {{ form_widget(prototype_comptevid.localisation, { 'attr': {'style': 'width: 150px'
+                                , 'placeholder': "Localisation "} }) }}
+                            {{ form_errors(prototype_comptevid.codecompte) }}
+                            {{ form_widget(prototype_comptevid.codecompte, { 'attr': {'style': 'width: 100px'
+                                , 'placeholder': "Code Compte "} }) }}
+                        </tr>
+                        <tr>
+                            {{ form_errors(prototype_comptevid.emailCompteVideo) }}
+                            {{ form_widget(prototype_comptevid.emailCompteVideo, { 'attr': {'style':
+                                'width: 200px', 'placeholder': "Email du titulaire"} }) }}
+                            {{ form_errors(prototype_comptevid.questioncomptevideo) }}
+                            {{ form_widget(prototype_comptevid.questioncomptevideo, { 'attr': {'style':
+                                'width: 300px', 'placeholder': "Question pour le compte"} }) }}
+                            {{ form_errors(prototype_comptevid.reponsecomptevideo) }}
+                            {{ form_widget(prototype_comptevid.reponsecomptevideo, { 'attr': {'style':
+                                'width: 300px', 'placeholder': "Réponse "} }) }}
+                            <button type="submit" style="margin: 0; padding: 0;">
+                                <img src="{{ asset('/img/arev (4).png') }}" style="height: 2em;">
+                            </button>
+                        </tr>
+                    </table>
+                    <br>
+                    <table class="table periphList suppList" style="margin: 0; ">
+                        {% for cv in form.appsmartphone.comptevideo %}
+                            <tbody class="pourSupp">
+                            <tr class="pourSupp">
+                                <th>
+                                    {{ form_label(cv.identifiant) }}
+                                    {{ form_errors(cv.identifiant) }}
+                                    {{ form_widget(cv.identifiant) }}
+                                </th>
+                                <th>
+                                    {{ form_label(cv.localisation) }}
+                                    {{ form_errors(cv.localisation) }}
+                                    {{ form_widget(cv.localisation) }}
+                                </th>
+                                <td>
+                                    {{ form_label(cv.codecompte) }}
+                                    {{ form_errors(cv.codecompte) }}
+                                    {{ form_widget(cv.codecompte) }}
+                                </td>
+                                <td>
+                                    {{ form_label(cv.emailCompteVideo) }}
+                                    {{ form_errors(cv.emailCompteVideo) }}
+                                    {{ form_widget(cv.emailCompteVideo) }}
+                                </td>
+                                <td>
+                                    {{ form_label(cv.questioncomptevideo) }}
+                                    {{ form_errors(cv.questioncomptevideo) }}
+                                    {{ form_widget(cv.questioncomptevideo) }}
+                                </td>
+                                <td>
+                                    {{ form_label(cv.reponsecomptevideo) }}
+                                    {{ form_errors(cv.reponsecomptevideo) }}
+                                    {{ form_widget(cv.reponsecomptevideo) }}
+                                </td>
+                                <td style="vertical-align: middle; ">
+                                    <button type="submit" style="vertical-align: middle;"><i
+                                                class="fa fa-refresh fa-3x"
+                                                aria-hidden="true"
+                                                data-toggle="tooltip"
+                                                data-original-title="Prise en compte des modifications"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {# FIN DU FORMULAIRE ET BOUTON SAUVEGARDE ET VALIDATION FINALE #}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default ">
+                    <div class="panel-heading" style="display: none">
+                    </div>
+                    <div class="panel-body  text-center">
+                        <div class="panel-body text-center">
+                            <div class="col-xs-12 col-md-4">
+                                {{ form_label(form.commentairetp) }}
+                                {{ form_errors(form.commentairetp) }}
+                                {{ form_widget(form.commentairetp) }}
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                {{ form_label(form.commentaire) }}
+                                {{ form_errors(form.commentaire) }}
+                                {{ form_widget(form.commentaire) }}
+                            </div>
+                            <div class="col-xs-12 col-md-2 ">
+
+
+                                <p> {{ form_end(form) }} </p>
+                            </div>
+                            <div class="SAUV col-xs-12 col-md-2 ">
+                                <a class="btn btn-default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                                   href="{{ path('validerFiche', { 'id': fiche.id }) }}"
+                                   onclick="return confirm('Confirmez la validation technique de la fiche?');"
+                                   data-toggle="tooltip"
+                                   data-original-title="La fiche va passer au statut 'terminé'.">VALIDATION</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/bootstrap-switch.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+                jQuery('[data-toggle="tooltip"]').tooltip();
+
+            });
+        </script>
+
+        <script type="text/javascript">
+            $.fn.bootstrapSwitch.defaults.handleWidth = 90;
+            $.fn.bootstrapSwitch.defaults.labelWidth = 0;
+            $.fn.bootstrapSwitch.defaults.onText = 'Filaire';
+            $.fn.bootstrapSwitch.defaults.offText = 'Radio';
+            $.fn.bootstrapSwitch.defaults.labelText = '';
+            $.fn.bootstrapSwitch.defaults.onColor = 'default';
+            $.fn.bootstrapSwitch.defaults.offColor = 'default';
+
+            $(document).ready(function () {
+                jQuery('input[name="radiobutton"]').bootstrapSwitch();
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                if ('#input_radio'.length > 4) {
+                    $('#collapseradio').show();
+                    $('#collapsefilaire').hide();
+                }
+                else {
+                    $('#radiobutton').hide();
+
+                    $('#collapsefilaire').hide();
+                    $('#collapseradio').hide();
+
+                    $('#raccocheckbox').on('switchChange.bootstrapSwitch', function (event, state) {
+                        if (state) {
+                            $('#collapseradio').show();
+                            $('#collapsefilaire').hide();
+                        }
+                        else {
+                            $('#collapsefilaire').show();
+                            $('#collapseradio').hide();
+                        }
+                        console.log("passage radio/filaire");
+                    });
+                }
+            });
+
+        </script>
+
+        <script type="text/javascript">
+
+            jQuery(document).ready(function () {
+                $collectionHolder = $('table.suppList');
+                $collectionHolder.find('tbody.pourSupp tr.pourSupp').each(function () {
+                    addTagFormDeleteLink($(this));
+                });
+            });
+
+            function addTagForm() {
+                addTagFormDeleteLink($newFormLi);
+            }
+
+            function addTagFormDeleteLink($tagFormLi) {
+                var $removeFormA = $('<td style="vertical-align: middle;"><button> <i class="fa fa-trash-o fa-3x"></i></button></td>');
+                $tagFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+                    // prevent the link from creating a "#" on the URL
+                    e.preventDefault();
+
+                    var result = confirm("Voulez-vous supprimer cet élément? Cette action est irreversible");
+                    if (result) {
+                        $tagFormLi.remove();
+
+                        document.getElementById('sauver').click();
+
+                    }
+                });
+            }
+
+        </script>
+
+    {% endblock %}

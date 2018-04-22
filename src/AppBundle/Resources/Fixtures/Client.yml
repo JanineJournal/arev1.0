@@ -1,0 +1,28 @@
+AppBundle\Entity\Client:
+    client_{1..20}:
+        nomClient: <name()>
+        codeClient: <ean8()>
+        type: <word()>
+        adresse01: <streetAddress()>
+        codePostal: <postcode()>
+        villeLocalite: <city()>
+        numTel1: '0243556677'
+        numTel2: <e164PhoneNumber()>
+        dataareaid: ctca
+
+AppBundle\Entity\Site:
+    site_{1..20}:
+        nomSite: <firstName()>
+        codeSite: <ean8()>
+        adresseSite01: <streetAddress()>
+        codePostalSite: <postcode()>
+        villeSite: <city()>
+        numTel1: 0243556677
+        numTel2: '0243556677'
+        numTel4: nc
+        numTel3: nc
+        dataareaid: ctca
+        client: '@client*'
+        #fiche: '@fiche*'
+
+#C:\wamp64\www\vera>php bin/console hautelook:fixtures:load
